@@ -1,4 +1,4 @@
-FROM codercom/code-server:3.6.0
+FROM codercom/code-server:3.9.3
 
 
 RUN code-server --install-extension ms-vscode.cpptools@0.29.0 \
