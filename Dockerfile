@@ -12,6 +12,7 @@ RUN code-server --install-extension xabikos.javascriptsnippets \
     && code-server --install-extension ritwickdey.liveserver \
     && code-server --install-extension mubaidr.vuejs-extension-pack \
     # install node js npm npx
+    && sudo apt update \
     && sudo apt install nodejs \
     && sudo apt install npm \
     && sudo apt-get clean\
