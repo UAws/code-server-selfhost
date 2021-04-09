@@ -12,14 +12,27 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-  # - host: code-server-02.vk8s-01-proxy.in.llycloud.com
+  # - host: code-server-02.vk8s-03-proxy.in.llycloud.com
   - host: code-server-03.172.16.0.213.xip.io
     http:
       paths:
       - backend:
           serviceName: code-server-03
           servicePort: 80
-  - host: code03.dev.vmv.re
+  - host: preview-code-server-03.172.16.0.213.xip.io
+    http:
+      paths:
+      - backend:
+          serviceName: code-server-03
+          servicePort: 5500
+  - host: code-03.dev.vmv.re
+    http:
+      paths:
+      - backend:
+          serviceName: code-server-03
+          servicePort: 80
+
+  - host: preview-code-03.dev.vmv.re
     http:
       paths:
       - backend:
@@ -34,7 +47,11 @@ metadata:
 spec:
  ports:
  - port: 80
+   name: web
    targetPort: 8080
+ - port: 5500
+   name: preview
+   targetPort: 5500
  selector:
    app: code-server-03
 ---
@@ -55,14 +72,16 @@ spec:
       labels:
         app: code-server-03
     spec:
+      securityContext:
+        fsGroup: 1000
       containers:
       - image: akide/oop-project-code-server-docker:latest
         imagePullPolicy: Always
+        name: code-server-03
         resources:
           limits:
             memory: "1024Mi"
             cpu: "2000m"
-        name: code-server-03
         volumeMounts:
           - name:  code-server-03-storage
             mountPath:  /home/coder/project
