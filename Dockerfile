@@ -13,8 +13,8 @@ RUN code-server --install-extension xabikos.javascriptsnippets \
     && code-server --install-extension mubaidr.vuejs-extension-pack \
     # install node js npm npx
     && sudo apt update \
-    && sudo apt install nodejs \
-    && sudo apt install npm \
+    && sudo apt -y install nodejs \
+    && sudo apt -y install npm \
     && sudo apt-get clean\
     # configure code server
     && rm -rf /home/coder/.local/share/code-server/settings.json /home/coder/.local/share/code-server/User/settings.json
