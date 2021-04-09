@@ -72,12 +72,12 @@ spec:
       labels:
         app: code-server-01
     spec:
+      securityContext:
+        fsGroup: 1000
       containers:
       - image: akide/oop-project-code-server-docker:latest
         imagePullPolicy: Always
         name: code-server-01
-        securityContext:
-          fsGroup: 1000
         resources:
           limits:
             memory: "1024Mi"
