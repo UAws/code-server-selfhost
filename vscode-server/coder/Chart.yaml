@@ -1,0 +1,5 @@
+apiVersion: v2
+description: Run Coder in Kubernetes
+name: coder
+type: application
+version: 1.10.0
