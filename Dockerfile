@@ -7,7 +7,6 @@ RUN code-server --install-extension xabikos.javascriptsnippets \
     && code-server --install-extension coenraads.bracket-pair-colorizer \
     && code-server --install-extension formulahendry.auto-rename-tag \    
     && code-server --install-extension christian-kohler.path-intellisense \    
-    && code-server --install-extension wallabyjs.quokka-vscode \    
     && code-server --install-extension auchenberg.vscode-browser-preview \    
     && code-server --install-extension vscode-icons-team.vscode-icons \    
     && code-server --install-extension ritwickdey.liveserver \
