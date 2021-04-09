@@ -15,7 +15,14 @@ RUN code-server --install-extension xabikos.javascriptsnippets \
     # https://github.com/Leask/code-server-nodejs/blob/master/Dockerfile
     # based on cs50's node version is : v12.22.0
     && curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - && \
+<<<<<<< HEAD
     sudo apt-get install -y gcc g++ make iputils-ping httpie nodejs npm && \
+=======
+    sudo apt-get install -y gcc g++ make iputils-ping httpie nodejs && \
+    curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list && \
+    sudo apt-get install -y yarn && \
+>>>>>>> wdc
     sudo apt clean \
     # configure code server
     && rm -rf /home/coder/.local/share/code-server/settings.json /home/coder/.local/share/code-server/User/settings.json
