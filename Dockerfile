@@ -11,14 +11,11 @@ RUN code-server --install-extension xabikos.javascriptsnippets \
     && code-server --install-extension vscode-icons-team.vscode-icons \    
     && code-server --install-extension ritwickdey.liveserver \
     && code-server --install-extension mubaidr.vuejs-extension-pack \
-    # sudo apt-get update && \
-    # sudo apt-get install -y git sudo && \
-    # mkdir -p /tmp/oop-project-build/ && cd /tmp/oop-project-build/  && \
-    # git clone https://github.com/UAws/OOP-Project.git && \
-    # cd OOP-Project/script/ && \
-    # sed -i 's/exit/echo/g' ./build_dependencies.sh && \
-    # ./build_dependencies.sh && rm -rf /tmp/oop-project-build/ && \
-    # install plugins
+    # install node js npm npx
+    && sudo apt install nodejs \
+    && sudo apt install npm \
+    && sudo apt-get clean\
+    # configure code server
     && rm -rf /home/coder/.local/share/code-server/settings.json /home/coder/.local/share/code-server/User/settings.json
 
 COPY .config/code-server/config.yaml /home/coder/.config/code-server/config.yaml 
