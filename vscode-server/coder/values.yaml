@@ -1,0 +1,229 @@
+# storageClassName sets the storage class for all Coder services and user
+# environments. By default the storageClassName is not specified and thus the
+# default StorageClass is used.
+#
+# NOTE: If storageClassName is not specified and a default StorageClass does
+# not exist, then the deployment will fail. The storageClass MUST support the
+# ReadWriteOnce access mode.
+storageClassName: ""
+# See the following for the different serviceType options and their use:
+# https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+serviceType: "ClusterIP"
+# podSecurityPolicyName is the name of the pod security policy to apply to all
+# Coder services and user environments. The optional ingress has its own field
+# for pod security policy.
+podSecurityPolicyName: ""
+# If you've set a custom default domain for your cluster, you may need to
+# remove or change this DNS suffix for service resolution to work correctly.
+clusterDomainSuffix: ".svc.cluster.local"
+# ingress contains configuration for the bundled ingress controller.
+ingress:
+  # useDefault set to true will deploy an nginx ingress that will allow you to
+  # access Coder from an external IP address if your kubernetes cluster is
+  # configured to provision external IP addresses. If you would like to bring
+  # your own ingress and hook Coder into that instead, set this value to false.
+  useDefault: false
+  # This is the hostname to use for accessing the platform. This can be left blank
+  # and the user can still access the platform from the external IP or a DNS name
+  # that resolves to the external IP address.
+  host: ""
+  # podSecurityPolicyName is the name of the pod security policy the built in
+  # ingress controller should abide. It should be noted that the ingress
+  # controller requires the NET_BIND_SERVICE capability, privilege escalation,
+  # and access to privileged ports to successfully deploy.
+  podSecurityPolicyName: ""
+  # additionalAnnotations are the additional annotations to be used when creating
+  # the ingress. These can be used to specify certificate issuers or other cloud
+  # provider specific integrations. 
+  #
+  # Annotations are provided as strings e.g. [ "mykey:myvalue", "mykey2:myvalue2" ] 
+  additionalAnnotations: []
+  # tls are the TLS options for the ingress. The hosts used for the tls configuration
+  # come from the ingress.host and the devurls.host variables. If those don't exist,
+  # then the TLS configuration will be ignored.
+  tls:
+    # enable enables the tls configuration.
+    enable: false
+    # hostSecretName is the secret to use for the ingress.host hostname.
+    hostSecretName: ""
+    # devurlsHostSecretName is the secret to use for the devurls.host hostname.
+    devurlsHostSecretName: ""
+devurls:
+  # host should be a wildcard hostname to allow
+  # matching against custom-created dev URLs.
+  # Not setting 'host' results in devurls being disabled.
+  # host: ""
+  host: "*.coder-enterprise.vk8s-01-proxy.in.llycloud.com"
+# postgres contains fields related to the Postgres backend.
+# If providing your own instance, a minimum version of Postgres 11 is required.
+postgres:
+  # useDefault set to true will deploy an internal Postgres instance alongside
+  # the platform. It is not recommended to run the internal Postgres instance
+  # in production. If true, all other values are ignored.
+  useDefault: true
+  # host is the host of the postgres instance.
+  host: ""
+  # port is the port that Postgres is listening on.
+  port: ""
+  # user is the user to connect to Postgres with.
+  user: ""
+  # database is the name of the database to connect to.
+  database: ""
+  # passwordSecret is the name of an existing secret in the current namespace
+  # with the password to the Postgres instance. The password must be contained
+  # in the field 'password'. Password is should be empty if the user does not 
+  # require a password to connect.
+  passwordSecret: ""
+  # sslMode determines how the connection is made to the database. The acceptable
+  # values are: disable, allow, prefer, require, verify-ca, and verify-full. Defaults
+  # to 'require'.
+  sslMode: "require"
+# imagePullPolicy sets the policy for pulling a container image across all
+# services.
+imagePullPolicy: Always
+# cemanager contains configuration the REST API handling CRUD operations
+# to the platform.
+cemanager:
+  # The number of replicas to run of the manager.
+  replicas: 1
+  image: docker.io/coderenvs/coder-service:1.10.0
+  # resources contains k8s requests and limits for the cemanager container.
+  # To unset a value, set it to "".
+  # To unset all values, you can provide a values.yaml file which sets resources
+  # to nil. E.g:
+  #
+  # cemanager:
+  #   # This will cause all values to be unset.
+  #   resources:
+  #   replica: 1
+  #
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "512Mi"
+    limits:
+      cpu: "250m"
+      memory: "512Mi"
+# envproxy contains configuration for the service handling long-lived
+# connections to environments such as IDE or shell sessions.
+envproxy:
+  # The number of replicas to run of the envproxy.
+  replicas: 1
+  image: docker.io/coderenvs/coder-service:1.10.0
+  # resources contains k8s requests and limits for the envproxy container.
+  # To unset a value, set it to "".
+  # To unset all values, you can provide a values.yaml file which sets resources
+  # to nil. E.g:
+  #
+  # envproxy:
+  #   # This will cause all values to be unset.
+  #   resources:
+  #   replica: 1
+  #
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "512Mi"
+    limits:
+      cpu: "250m"
+      memory: "512Mi"
+# envwatcher contains configuration for the service handling environment
+# stats.
+envwatcher:
+  image: docker.io/coderenvs/coder-service:1.10.0
+  # resources contains k8s requests and limits for the envwatcher container.
+  # To unset a value, set it to "".
+  # To unset all values, you can provide a values.yaml file which sets resources
+  # to nil. E.g:
+  #
+  # envwatcher:
+  #   # This will cause all values to be unset.
+  #   resources:
+  #   image: "some image"
+  #
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "512Mi"
+    limits:
+      cpu: "1000m"
+      memory: "512Mi"
+# timescale contains configuration for the internal database. It is not recommended
+# to run this service in production. See the Postgres stanza.
+timescale:
+  image: docker.io/coderenvs/timescale:1.10.0
+  # resources contains k8s requests and limits for the timescale container.
+  # To unset a value, set it to "".
+  # To unset all values, you can provide a values.yaml file which sets resources
+  # to nil. E.g:
+  #
+  # timescale:
+  #   # This will cause all values to be unset.
+  #   resources:
+  #   replica: 1
+  #
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "1Gi"
+      # storage specifies the size of the volume claim for persisting the database.
+      storage: "10Gi"
+    limits:
+      cpu: "250m"
+      memory: "1Gi"
+dockerd:
+  image: docker.io/coderenvs/dockerd:1.10.0
+envbuilder:
+  image: docker.io/coderenvs/envbuilder:1.10.0
+# environments defines configuration that is applied to all
+# user environments. 
+environments:
+  # tolerations are applied to all user environments. Each element
+  # is a regular pod toleration object. To set service tolerations see
+  # serviceTolerations.
+  # e.g.
+  # tolerations:
+  # - key: "my key"
+  #   operator: "Exists"
+  #   effect: "NoExecute"
+  #   tolerationSeconds: 6000
+  tolerations: []
+# certs describes CAs that should be added to Coder services. 
+# These certs are NOT added to environments.
+certs:
+  # secret is the kubernetes secret that holds the CAs that should
+  # be added to Coder services.
+  secret:
+    # name is the name of the secret.
+    name: ""
+    # key is the key in the secret pointing to the certificate
+    # bundle.
+    key: ""
+# namespaceWhitelist is a list of additional namespaces that environments may be deploy to.
+namespaceWhitelist: []
+# DEPRECATED: autooff has been moved to an organization level option
+# configurable in the dashboard.
+# This field will be removed in the minor release 1.9.0
+autooff:
+  # enable=true will automatically turn off environments that have
+  # been idle for a configurable number of hours.
+  enable: true
+ssh:
+  # enable=false will disable SSH for accessing environments
+  enable: true
+# serviceTolerations are applied to all Coder managed services. Each element
+# is a toleration object. To set user environment tolerations see
+# environments.tolerations.
+# e.g.
+# serviceTolerations:
+# - key: "my key"
+#   operator: "Exists"
+#   effect: "NoExecute"
+#   tolerationSeconds: 6000
+serviceTolerations: []
+# logging configures the logging format of Coder services
+logging:
+  # human logs are formatted for readability by a human
+  human: /dev/stderr
+  stackdriver: ""
+  json: ""
