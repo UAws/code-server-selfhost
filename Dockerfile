@@ -1,11 +1,17 @@
 FROM codercom/code-server:3.9.3
 
 
-RUN code-server --install-extension ms-vscode.cpptools@0.29.0 \
-    && code-server --install-extension twxs.cmake \
-    && code-server --install-extension tabnine.tabnine-vscode \
-    && code-server --install-extension davidschuldenfrei.gtest-adapter \
-    && code-server --install-extension ms-vscode.cmake-tools && \
+RUN code-server --install-extension xabikos.javascriptsnippets \
+    && code-server --install-extension msjsdiag.debugger-for-chrome \
+    && code-server --install-extension dbaeumer.vscode-eslint \
+    && code-server --install-extension coenraads.bracket-pair-colorizer \
+    && code-server --install-extension formulahendry.auto-rename-tag \    
+    && code-server --install-extension christian-kohler.path-intellisense \    
+    && code-server --install-extension wallabyjs.quokka-vscode \    
+    && code-server --install-extension auchenberg.vscode-browser-preview \    
+    && code-server --install-extension vscode-icons-team.vscode-icons \    
+    && code-server --install-extension ritwickdey.liveserver \
+    && code-server --install-extension mubaidr.vuejs-extension-pack \
     # sudo apt-get update && \
     # sudo apt-get install -y git sudo && \
     # mkdir -p /tmp/oop-project-build/ && cd /tmp/oop-project-build/  && \
@@ -14,7 +20,7 @@ RUN code-server --install-extension ms-vscode.cpptools@0.29.0 \
     # sed -i 's/exit/echo/g' ./build_dependencies.sh && \
     # ./build_dependencies.sh && rm -rf /tmp/oop-project-build/ && \
     # install plugins
-    rm -rf /home/coder/.local/share/code-server/settings.json /home/coder/.local/share/code-server/User/settings.json
+    && rm -rf /home/coder/.local/share/code-server/settings.json /home/coder/.local/share/code-server/User/settings.json
 
 COPY .config/code-server/config.yaml /home/coder/.config/code-server/config.yaml 
 COPY ./settings.json /home/coder/.local/share/code-server/settings.json
