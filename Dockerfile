@@ -6,13 +6,13 @@ RUN code-server --install-extension ms-vscode.cpptools@0.29.0 \
     && code-server --install-extension tabnine.tabnine-vscode \
     && code-server --install-extension davidschuldenfrei.gtest-adapter \
     && code-server --install-extension ms-vscode.cmake-tools && \
-    sudo apt-get update && \
-    sudo apt-get install -y git sudo && \
-    mkdir -p /tmp/oop-project-build/ && cd /tmp/oop-project-build/  && \
-    git clone https://github.com/UAws/OOP-Project.git && \
-    cd OOP-Project/script/ && \
-    sed -i 's/exit/echo/g' ./build_dependencies.sh && \
-    ./build_dependencies.sh && rm -rf /tmp/oop-project-build/ && \
+    # sudo apt-get update && \
+    # sudo apt-get install -y git sudo && \
+    # mkdir -p /tmp/oop-project-build/ && cd /tmp/oop-project-build/  && \
+    # git clone https://github.com/UAws/OOP-Project.git && \
+    # cd OOP-Project/script/ && \
+    # sed -i 's/exit/echo/g' ./build_dependencies.sh && \
+    # ./build_dependencies.sh && rm -rf /tmp/oop-project-build/ && \
     # install plugins
     rm -rf /home/coder/.local/share/code-server/settings.json /home/coder/.local/share/code-server/User/settings.json
 
