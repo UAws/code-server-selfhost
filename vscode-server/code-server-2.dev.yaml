@@ -58,13 +58,11 @@ spec:
       containers:
       - image: akide/oop-project-code-server-docker:latest
         imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "1024Mi"
+            cpu: "2000m"
         name: code-server-02
-        env:
-          # - name : AUTH
-          #   value: none
-        # env:
-        # - name: PASSWORD
-        #   value: ""
         volumeMounts:
           - name:  code-server-02-storage
             mountPath:  /home/coder/project

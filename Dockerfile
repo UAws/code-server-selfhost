@@ -24,6 +24,7 @@ RUN code-server --install-extension xabikos.javascriptsnippets \
 COPY .config/code-server/config.yaml /home/coder/.config/code-server/config.yaml 
 COPY ./settings.json /home/coder/.local/share/code-server/settings.json
 COPY ./settings.json /home/coder/.local/share/code-server/User/settings.json
+COPY ./settings.json /home/coder/.vscode/settings.json
 
 RUN sudo chown -R 1000:1000 /home/coder/.local/share/code-server
 

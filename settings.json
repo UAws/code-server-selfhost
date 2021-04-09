@@ -2,5 +2,7 @@
     "workbench.colorTheme": "Default Dark+",
     "tabnine.experimentalAutoImports": true,
     "extensions.autoUpdate": false,
-    "extensions.autoCheckUpdates": false
+    "extensions.autoCheckUpdates": false,
+    "liveServer.settings.port": 5500,
+    "liveServer.settings.multiRootWorkspaceName": "coder"
 }
