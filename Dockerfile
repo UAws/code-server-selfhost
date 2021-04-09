@@ -19,11 +19,13 @@ RUN code-server --install-extension xabikos.javascriptsnippets \
     # sed -i 's/exit/echo/g' ./build_dependencies.sh && \
     # ./build_dependencies.sh && rm -rf /tmp/oop-project-build/ && \
     # install plugins
-    && rm -rf /home/coder/.local/share/code-server/settings.json /home/coder/.local/share/code-server/User/settings.json
+    && rm -rf /home/coder/.local/share/code-server/settings.json /home/coder/.local/share/code-server/User/settings.json \
+    && sudo chown coder:coder -R /home/coder/project
 
 COPY .config/code-server/config.yaml /home/coder/.config/code-server/config.yaml 
 COPY ./settings.json /home/coder/.local/share/code-server/settings.json
 COPY ./settings.json /home/coder/.local/share/code-server/User/settings.json
+COPY ./settings.json /home/coder/.vscode/settings.json
 
 RUN sudo chown -R 1000:1000 /home/coder/.local/share/code-server
 
