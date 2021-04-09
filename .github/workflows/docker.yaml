@@ -1,0 +1,26 @@
+name: Docker Build
+
+on: [push, pull_request]
+
+jobs:
+
+  docker:
+    name: Publish Docker Image
+    runs-on: ubuntu-20.04
+    env:
+      REPO: ${{ secrets.DOCKER_REPO }}
+    steps:
+      - uses: actions/checkout@v1
+      - name: Docker Hub Sign-in
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Building Docker Image
+        run: |
+          docker build -t $REPO:latest -t $REPO:$GITHUB_RUN_ID .
+          echo $GITHUB_RUN_ID
+      - name: Publish Docker Image
+        run: docker push $REPO:$GITHUB_RUN_ID
+
+      - name: Publish Docker Image Latest
+        if: github.ref == 'refs/heads/master'
+        run: docker push $REPO:latest
