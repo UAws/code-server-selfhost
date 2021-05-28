@@ -13,26 +13,26 @@ metadata:
 spec:
   rules:
   # - host: code-server-02.vk8s-01-proxy.in.llycloud.com
-  - host: code-server-01.172.16.0.213.xip.io
+  - host: code-server-01.172.16.0.213.nip.io
     http:
       paths:
       - backend:
           serviceName: code-server-01
           servicePort: 80
-  - host: preview-code-server-01.172.16.0.213.xip.io
+  - host: "*.preview-code-server-01.172.16.0.213.nip.io"
     http:
       paths:
       - backend:
           serviceName: code-server-01
-          servicePort: 5500
+          servicePort: 80
   - host: code-01.dev.vmv.re
     http:
       paths:
       - backend:
           serviceName: code-server-01
           servicePort: 80
-
-  - host: preview-code-01.dev.vmv.re
+# https://github.com/cdr/code-server/pull/1453
+  - host: "*.preview-code-01.dev.vmv.re"
     http:
       paths:
       - backend:
@@ -80,7 +80,10 @@ spec:
         name: code-server-01
         resources:
           limits:
-            memory: "1024Mi"
+            memory: "4096Mi"
+            cpu: "4000m"          
+          requests:
+            memory: "2048Mi"
             cpu: "2000m"
         volumeMounts:
           - name:  code-server-01-storage

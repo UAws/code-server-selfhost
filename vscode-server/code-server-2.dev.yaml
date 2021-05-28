@@ -13,18 +13,18 @@ metadata:
 spec:
   rules:
   # - host: code-server-02.vk8s-02-proxy.in.llycloud.com
-  - host: code-server-02.172.16.0.213.xip.io
+  - host: code-server-02.172.16.0.213.nip.io
     http:
       paths:
       - backend:
           serviceName: code-server-02
           servicePort: 80
-  - host: preview-code-server-02.172.16.0.213.xip.io
+  - host: "*.preview-code-server-02.172.16.0.213.nip.io"
     http:
       paths:
       - backend:
           serviceName: code-server-02
-          servicePort: 5500
+          servicePort: 80
   - host: code-02.dev.vmv.re
     http:
       paths:
@@ -32,7 +32,7 @@ spec:
           serviceName: code-server-02
           servicePort: 80
 
-  - host: preview-code-02.dev.vmv.re
+  - host: "*.preview-code-02.dev.vmv.re"
     http:
       paths:
       - backend:
@@ -80,7 +80,10 @@ spec:
         name: code-server-02
         resources:
           limits:
-            memory: "1024Mi"
+            memory: "4096Mi"
+            cpu: "4000m"          
+          requests:
+            memory: "2048Mi"
             cpu: "2000m"
         volumeMounts:
           - name:  code-server-02-storage
