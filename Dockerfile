@@ -1,4 +1,4 @@
-FROM codercom/code-server:3.9.3
+FROM codercom/code-server:3.10.2
 
 
 RUN code-server --install-extension xabikos.javascriptsnippets \
@@ -18,14 +18,14 @@ RUN code-server --install-extension xabikos.javascriptsnippets \
     sudo apt-get install -y gcc g++ make iputils-ping httpie nodejs && \
     sudo apt clean \
     # configure code server
-    && rm -rf /home/coder/.local/share/code-server/settings.json /home/coder/.local/share/code-server/User/settings.json
+    && rm -rf /home/coder/.local/share/code-server/settings.json /home/coder/.local/share/code-server/User/settings.json \
+    && sudo chown -R 1000:1000 /home/coder/.local/share/code-server
 
 COPY .config/code-server/config.yaml /home/coder/.config/code-server/config.yaml 
 COPY ./settings.json /home/coder/.local/share/code-server/settings.json
 COPY ./settings.json /home/coder/.local/share/code-server/User/settings.json
 COPY ./settings.json /home/coder/.vscode/settings.json
 
-RUN sudo chown -R 1000:1000 /home/coder/.local/share/code-server
 
 
 
