@@ -29,6 +29,7 @@ COPY ./settings.json /home/coder/.vscode/settings.json
 
 RUN sudo chown -R 1000:1000 /home/coder/.local/share/code-server && sudo chown -R 1000:1000 /home/coder/
 
+
 EXPOSE 8080
 # This way, if someone sets $DOCKER_USER, docker-exec will still work as
 # the uid will remain the same. note: only relevant if -u isn't passed to
